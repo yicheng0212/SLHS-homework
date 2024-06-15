@@ -78,6 +78,7 @@
 </head>
 
 <body class="bg-light">
+    <?php include "header.php"; ?>
     <header>
         <div class="header-container">
             <img src="" alt="header" class="img-fluid" id="headerImage">
