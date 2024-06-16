@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,24 +56,20 @@
         }
     </style>
 </head>
-
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a href="./index.php" class="navbar-brand">
             <img src="./images/lyc_logo.png" alt="LOGO" height="100">
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" id="location-menu">
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         目的地
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">北部</a>
-                        <a class="dropdown-item" href="#">中部</a>
-                        <a class="dropdown-item" href="#">南部</a>
-                        <a class="dropdown-item" href="#">東部</a>
-                        <div class="dropdown-divider"></div>
+                        <!-- 動態填充選單項目 -->
+                        <a class="dropdown-item" v-for="location in locations" :key="location.id" :href="'./city.php?city=' + location.name">{{ location.name }}</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -113,14 +108,37 @@
     </div>
     <?php include "footer.php"; ?>
     <script>
-        $(document).ready(function() {
-            $('.navbar-nav .dropdown').hover(function() {
-                $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(200);
-            }, function() {
-                $(this).find('.dropdown-menu').stop(true, true).delay(2000).fadeOut(200);
-            });
+        const app = Vue.createApp({
+            data() {
+                return {
+                    query: '',
+                    locations: []
+                };
+            },
+            mounted() {
+                axios.get('./api/api.php/locations')
+                    .then(response => {
+                        this.locations = response.data;
+                        this.initDropdownHover();
+                    })
+                    .catch(error => {
+                        console.error("There was an error fetching the locations:", error);
+                    });
+            },
+            methods: {
+                initDropdownHover() {
+                    $(document).ready(function() {
+                        $('.navbar-nav .dropdown').hover(function() {
+                            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(200);
+                        }, function() {
+                            $(this).find('.dropdown-menu').stop(true, true).delay(2000).fadeOut(200);
+                        });
+                    });
+                }
+            }
         });
+
+        app.mount('#location-menu');
     </script>
 </body>
-
 </html>
