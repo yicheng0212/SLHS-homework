@@ -77,7 +77,7 @@
     </style>
 </head>
 
-<body class="bg-light">
+<body class="bg-light" id="app">
     <?php include "header.php"; ?>
     <header>
         <div class="header-container">
@@ -89,7 +89,7 @@
         </div>
     </header>
 
-    <div class="container mt-4" id="app">
+    <div class="container mt-4">
         <div v-if="paginatedCards.length > 0">
             <h2>人氣 Top 10</h2>
             <div id="top10Carousel" class="carousel slide">
@@ -233,7 +233,8 @@
                     currentHotelSlide: 0,
                     currentThemeParkSlide: 0,
                     currentSouvenirSlide: 0,
-                    itemsPerPage: 3
+                    itemsPerPage: 3,
+                    query: ''
                 };
             },
             computed: {
@@ -268,7 +269,7 @@
             },
             methods: {
                 fetchData(city) {
-                    fetch(`./api/api.php/locations`)
+                    fetch(`https://echolyc.com/final/api/api.php/locations`)
                         .then(response => response.json())
                         .then(locations => {
                             const cityData = locations.find(item => item.name === city);
@@ -285,7 +286,7 @@
                         });
                 },
                 fetchAttractions(cityId) {
-                    fetch(`./api/api.php/attractions`)
+                    fetch(`https://echolyc.com/final/api/api.php/attractions`)
                         .then(response => response.json())
                         .then(data => {
                             this.top10 = data.filter(item => item.location_id === cityId && item.popularity <= 10);
@@ -315,6 +316,21 @@
                     } else if (category === 'souvenirs' && this.currentSouvenirSlide < this.paginatedSouvenirCards.length - 1) {
                         this.currentSouvenirSlide++;
                     }
+                },
+                performSearch() {
+                    fetch('https://echolyc.com/final/api/api.php/locations')
+                        .then(response => response.json())
+                        .then(data => {
+                            const matchingLocation = data.find(location => location.name.toLowerCase() === this.query.toLowerCase());
+                            if (matchingLocation) {
+                                window.location.href = './city.php?city=' + matchingLocation.name;
+                            } else {
+                                window.location.href = './search.php?search=' + this.query;
+                            }
+                        })
+                        .catch(error => {
+                            console.error("There was an error fetching the locations:", error);
+                        });
                 }
             },
             mounted() {

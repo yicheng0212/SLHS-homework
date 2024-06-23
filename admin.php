@@ -167,7 +167,7 @@
                 },
                 async fetchResources() {
                     try {
-                        const response = await fetch(`./api/api.php/${this.resource}`);
+                        const response = await fetch(`https://echolyc.com/final/api/api.php/${this.resource}`);
                         const data = await response.json();
                         this.items = data;
                     } catch (error) {
@@ -176,7 +176,7 @@
                 },
                 async fetchLocations() {
                     try {
-                        const response = await fetch('./api/api.php/locations');
+                        const response = await fetch('https://echolyc.com/final/api/api.php/locations');
                         return await response.json();
                     } catch (error) {
                         console.error('Error fetching locations:', error);
@@ -185,7 +185,7 @@
                 },
                 async fetchCategories() {
                     try {
-                        const response = await fetch('./api/api.php/categories');
+                        const response = await fetch('https://echolyc.com/final/api/api.php/categories');
                         return await response.json();
                     } catch (error) {
                         console.error('Error fetching categories:', error);
@@ -201,7 +201,7 @@
                 },
                 async addResource() {
                     try {
-                        const response = await fetch(`./api/api.php/${this.resource}`, {
+                        const response = await fetch(`https://echolyc.com/final/api/api.php/${this.resource}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -227,7 +227,7 @@
                 },
                 async updateResource() {
                     try {
-                        const response = await fetch(`./api/api.php/${this.resource}/${this.currentResource.id}`, {
+                        const response = await fetch(`https://echolyc.com/final/api/api.php/${this.resource}/${this.currentResource.id}`, {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -247,7 +247,7 @@
                 },
                 async deleteResource(id) {
                     try {
-                        const response = await fetch(`./api/api.php/${this.resource}/${id}`, {
+                        const response = await fetch(`https://echolyc.com/final/api/api.php/${this.resource}/${id}`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json'
