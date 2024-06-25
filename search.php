@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>搜尋頁面</title>
+    <title>1121405林翼成-搜尋頁面</title>
     <?php include "link.php"; ?>
     <style>
         .header-container {
